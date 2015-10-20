@@ -7,6 +7,10 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Handin2DDSLITE", "Handin2DD
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Handin2SSDT", "Handin2SSDT\Handin2SSDT.sqlproj", "{7816B95A-BF0F-4D41-9A72-41A5D7726739}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console Application", "Console Application\Console Application.csproj", "{D3E9419A-E145-40FC-8388-40C884AC6B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database Access Logic Tier", "Database Access Logic Tier\Database Access Logic Tier.csproj", "{E3D16542-A381-4591-82E5-FD3D5831F722}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{7816B95A-BF0F-4D41-9A72-41A5D7726739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7816B95A-BF0F-4D41-9A72-41A5D7726739}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7816B95A-BF0F-4D41-9A72-41A5D7726739}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D3E9419A-E145-40FC-8388-40C884AC6B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3E9419A-E145-40FC-8388-40C884AC6B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3E9419A-E145-40FC-8388-40C884AC6B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3E9419A-E145-40FC-8388-40C884AC6B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3D16542-A381-4591-82E5-FD3D5831F722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D16542-A381-4591-82E5-FD3D5831F722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D16542-A381-4591-82E5-FD3D5831F722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D16542-A381-4591-82E5-FD3D5831F722}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
