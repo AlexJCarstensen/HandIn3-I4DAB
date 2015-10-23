@@ -73,32 +73,15 @@ namespace Database_Access_Logic_Tier
 
 
                 // 1. Instantiate a new command with a query and connection
-                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Adresse ([Type], VejNavn, HusNummer, PostNummer, City) VALUES ( 'Skole', 'Svendborgvej', 10, 5432, 'Svendborg')", _conn))
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Adresse ([Type], VejNavn, HusNummer, PostNummer, City) VALUES ( 'Skole', 'Svendborgvej', 10, 5432, 'Svendborg')SELECT SCOPE_IDENTITY()", _conn))
                 {
-                    // 2. Call ExecuteNonQuery to send command
-                    cmd.ExecuteNonQuery();
+                    aID = Convert.ToInt32(cmd.ExecuteScalar());
                 }
 
-                using (SqlCommand cmd = new SqlCommand(@"SELECT AdresseID FROM Adresse WHERE VejNavn = 'Svendborgvej' AND HusNummer = 10", _conn))
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Person ([CPRNr], [Fornavn], [Mellemnavn], [Efternavn], [type], [AdresseID]) VALUES ( 1245365243, 'Jonathan', 'Parkour', 'Spang', 'Skole'," + aID + ")SELECT SCOPE_IDENTITY()", _conn))
                 {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                            aID = Convert.ToInt32(reader["AdresseID"]);
-                    }
-                }
-
-                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Person ([CPRNr], [Fornavn], [Mellemnavn], [Efternavn], [type], [AdresseID]) VALUES ( 1245365243, 'Jonathan', 'Parkour', 'Spang', 'Skole'," + aID + ")", _conn))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-
-                using (SqlCommand cmd = new SqlCommand(@"SELECT PersonID FROM Person WHERE CPRNr = 1245365243 AND Fornavn = 'Jonathan'", _conn))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read()) pID = Convert.ToInt32(reader["PersonID"]);
-                    }
+                    //cmd.ExecuteNonQuery();
+                    pID = Convert.ToInt32(cmd.ExecuteScalar());
                 }
 
                 using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Telefon (PersonID, TelefonNr, [Type]) VALUES (" + pID + ", 21535625, 'Skole')", _conn))

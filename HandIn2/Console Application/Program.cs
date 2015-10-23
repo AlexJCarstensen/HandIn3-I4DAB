@@ -28,29 +28,31 @@ namespace Console_Application
 
             scd.ReadData();
 
-            //use ExecuteNonQuery method for Update
-            scd.UpdateData();
+            ////use ExecuteNonQuery method for Update
+            //scd.UpdateData();
 
-            Console.WriteLine();
-            Console.WriteLine("Categories After Update");
-            Console.WriteLine("------------------------------");
+            //Console.WriteLine();
+            //Console.WriteLine("Categories After Update");
+            //Console.WriteLine("------------------------------");
 
-            scd.ReadData();
+            //scd.ReadData();
 
-            // use ExecuteNonQuery method for Delete
-            scd.DeleteData();
+            //// use ExecuteNonQuery method for Delete
+            //scd.DeleteData();
 
-            Console.WriteLine();
-            Console.WriteLine("Categories After Delete");
-            Console.WriteLine("------------------------------");
+            //Console.WriteLine();
+            //Console.WriteLine("Categories After Delete");
+            //Console.WriteLine("------------------------------");
 
-            scd.ReadData();
+            //scd.ReadData();
 
-            // use ExecuteScalar method
-            int numberOfRecords = scd.GetNumberOfRecords();
+            //// use ExecuteScalar method
+            //int numberOfRecords = scd.GetNumberOfRecords();
 
-            Console.WriteLine();
-            Console.WriteLine("Number of Records in bor: {0}", numberOfRecords);
+            //Console.WriteLine();
+            //Console.WriteLine("Number of Records in bor: {0}", numberOfRecords);
+
+            string input = Console.ReadLine();
 
         }
     }
