@@ -68,41 +68,48 @@ namespace Database_Access_Logic_Tier
                 // Open the connection
                 _conn.Open();
 
-                SqlDataReader pID = null;
-                SqlDataReader aID = null;
-
-                // prepare command string
-                string[] insertString =
-                {
-                    @"INSERT INTO Adresse ([Type], VejNavn, HusNummer, PostNummer, City) VALUES ( 'Skole', 'Svendborgvej', 10, 5432, 'Svendborg')",
-                    @"SELECT AdressID FROM Adresse WHERE VejNavn = 'Svendborgvej' AND HusNummer = 10",
-                    @"INSERT INTO Person ([CPRNr], [Fornavn], [Mellemnavn], [Efternavn], [type], [AdresseID]) VALUES ( 1245365243, 'Jonathan', 'Parkour', 'Spang', 'Skole',@AdressID)",
-                    @"SELECT PersonID FROM Person WHERE CPRNr = 1245365243 AND Fornavn = 'Jonathan'"};
+                int pID = -1;
+                int aID = -1;
                 
-               
-                
-               
 
                 // 1. Instantiate a new command with a query and connection
-                SqlCommand cmd = new SqlCommand(insertString[0], _conn);
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Adresse ([Type], VejNavn, HusNummer, PostNummer, City) VALUES ( 'Skole', 'Svendborgvej', 10, 5432, 'Svendborg')", _conn))
+                {
+                    // 2. Call ExecuteNonQuery to send command
+                    cmd.ExecuteNonQuery();
+                }
 
-                // 2. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(@"SELECT AdresseID FROM Adresse WHERE VejNavn = 'Svendborgvej' AND HusNummer = 10", _conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                         aID = Convert.ToInt32(reader["AdresseID"]); 
+                    }
+                }
 
-                cmd = new SqlCommand(insertString[1], _conn);
-                pID = cmd.ExecuteReader();
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Person ([CPRNr], [Fornavn], [Mellemnavn], [Efternavn], [type], [AdresseID]) VALUES ( 1245365243, 'Jonathan', 'Parkour', 'Spang', 'Skole'," + aID + ")", _conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
 
-                cmd = new SqlCommand(insertString[2], _conn);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(@"SELECT PersonID FROM Person WHERE CPRNr = 1245365243 AND Fornavn = 'Jonathan'", _conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read()) pID = Convert.ToInt32(reader["PersonID"]);
+                    }
+                }
 
-                cmd = new SqlCommand(insertString[3], _conn);
-                aID = cmd.ExecuteReader();
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Telefon (PersonID, TelefonNr, [Type]) VALUES (" + pID + ", 21535625, 'Skole')", _conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
 
-                cmd = new SqlCommand("INSERT INTO Telefon (PersonID, TelefonNr, [Type]) VALUES ("+ pID +", 21535625, 'Skole')", _conn);
-                cmd.ExecuteNonQuery();
-
-                cmd = new SqlCommand("INSERT INTO bor (PersonID, AdresseID) VALUES (" + pID + ", " + aID + ")", _conn);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO bor (PersonID, AdresseID) VALUES (" + pID + ", " + aID + ")", _conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
 
             }
             finally
@@ -120,7 +127,7 @@ namespace Database_Access_Logic_Tier
         /// </summary>
         public void UpdateData()
         {
-            /*try
+            try
             {
                 // Open the connection
                 _conn.Open();
@@ -147,7 +154,7 @@ namespace Database_Access_Logic_Tier
                 {
                     conn.Close();
                 }
-            }*/
+            }
         }
 
         /// <summary>

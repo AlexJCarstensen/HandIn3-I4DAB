@@ -19,14 +19,14 @@ namespace Console_Application
 
                 // use ExecuteReader method
                 scd.ReadData();
-            /*
-                // use ExecuteNonQuery method for Insert
-                scd.Insertdata();
-                Console.WriteLine();
-                Console.WriteLine("Categories After Insert");
-                Console.WriteLine("------------------------------");
+            
+                //// use ExecuteNonQuery method for Insert
+                //scd.Insertdata();
+                //Console.WriteLine();
+                //Console.WriteLine("Categories After Insert");
+                //Console.WriteLine("------------------------------");
 
-                scd.ReadData();
+                //scd.ReadData();
             
                 // use ExecuteNonQuery method for Update
                 scd.UpdateData();
@@ -36,7 +36,7 @@ namespace Console_Application
                 Console.WriteLine("------------------------------");
 
                 scd.ReadData();
-
+/*
                 // use ExecuteNonQuery method for Delete
                 scd.DeleteData();
 
@@ -51,7 +51,7 @@ namespace Console_Application
 
                 Console.WriteLine();
                 Console.WriteLine("Number of Records: {0}", numberOfRecords);*/
-            
+            string input = Console.ReadLine();
         }
     }
 }
