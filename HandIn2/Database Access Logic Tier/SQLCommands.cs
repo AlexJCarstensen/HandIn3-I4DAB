@@ -5,7 +5,7 @@ namespace Database_Access_Logic_Tier
 {
     public class SQLCommands
     {
-        SqlConnection _conn;
+        readonly SqlConnection _conn;
 
         public SQLCommands()
         {
@@ -15,7 +15,7 @@ namespace Database_Access_Logic_Tier
         }
 
         // call methods that demo SqlCommand capabilities
-       
+
 
         /// <summary>
         /// use ExecuteReader method
@@ -34,7 +34,7 @@ namespace Database_Access_Logic_Tier
                   INNER JOIN Person ON(bor.PersonID = Person.PersonID)
                   INNER JOIN Telefon ON(Person.PersonID = Telefon.PersonID)", _conn);
 
-                
+
                 // 2. Call Execute reader to get query results
                 rdr = cmd.ExecuteReader();
                 Console.WriteLine(rdr.FieldCount);
@@ -70,7 +70,7 @@ namespace Database_Access_Logic_Tier
 
                 int pID = -1;
                 int aID = -1;
-                
+
 
                 // 1. Instantiate a new command with a query and connection
                 using (SqlCommand cmd = new SqlCommand(@"INSERT INTO Adresse ([Type], VejNavn, HusNummer, PostNummer, City) VALUES ( 'Skole', 'Svendborgvej', 10, 5432, 'Svendborg')", _conn))
@@ -84,7 +84,7 @@ namespace Database_Access_Logic_Tier
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
-                         aID = Convert.ToInt32(reader["AdresseID"]); 
+                            aID = Convert.ToInt32(reader["AdresseID"]);
                     }
                 }
 
@@ -134,25 +134,25 @@ namespace Database_Access_Logic_Tier
 
                 // prepare command string
                 string updateString = @"
-                 update Categories
-                 set CategoryName = 'Other'
-                 where CategoryName = 'Miscellaneous'";
+                 update Person
+                 set Fornavn = 'Jeba'
+                 where CPRNr = 1245365243";
 
                 // 1. Instantiate a new command with command text only
-                SqlCommand cmd = new SqlCommand(updateString);
+                using (SqlCommand cmd = new SqlCommand(updateString, _conn))
+                {
+                    // 3. Call ExecuteNonQuery to send command
+                    cmd.ExecuteNonQuery();
+                }
 
-                // 2. Set the Connection property
-                cmd.Connection = conn;
 
-                // 3. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
             }
             finally
             {
                 // Close the connection
-                if (conn != null)
+                if (_conn != null)
                 {
-                    conn.Close();
+                    _conn.Close();
                 }
             }
         }
@@ -162,66 +162,61 @@ namespace Database_Access_Logic_Tier
         /// </summary>
         public void DeleteData()
         {
-           /* try
+            try
             {
                 // Open the connection
-                conn.Open();
+                _conn.Open();
 
                 // prepare command string
                 string deleteString = @"
-                 delete from Categories
-                 where CategoryName = 'Other'";
+                 delete from bor
+                 where PersonID = 1";
 
                 // 1. Instantiate a new command
-                SqlCommand cmd = new SqlCommand();
-
-                // 2. Set the CommandText property
-                cmd.CommandText = deleteString;
-
-                // 3. Set the Connection property
-                cmd.Connection = conn;
-
-                // 4. Call ExecuteNonQuery to send command
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(deleteString, _conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
             finally
             {
                 // Close the connection
-                if (conn != null)
+                if (_conn != null)
                 {
-                    conn.Close();
+                    _conn.Close();
                 }
-            }*/
+            }
         }
 
         /// <summary>
         /// use ExecuteScalar method
         /// </summary>
         /// <returns>number of records</returns>
-       /* public int GetNumberOfRecords()
+        public int GetNumberOfRecords()
         {
             int count = -1;
 
             try
             {
                 // Open the connection
-                conn.Open();
+                _conn.Open();
 
                 // 1. Instantiate a new command
-                SqlCommand cmd = new SqlCommand("select count(*) from Categories", conn);
-
-                // 2. Call ExecuteScalar to send command
-                count = (int)cmd.ExecuteScalar();
+                using (SqlCommand cmd = new SqlCommand("select count(*) from bor", _conn))
+                {
+                    // 2. Call ExecuteScalar to send command
+                    count = (int)cmd.ExecuteScalar();
+                }
             }
             finally
             {
                 // Close the connection
-                if (conn != null)
+                if (_conn != null)
                 {
-                    conn.Close();
+                    _conn.Close();
                 }
             }
             return count;
-        }*/
+        }
     }
 }
